@@ -9,10 +9,10 @@ public class Internship implements Serializable {
     private LocalDate deadline;
 
     public Internship(String company, String role, Boolean applied, String status, LocalDate deadline) {
-        this.company = company;
-        this.role = role;
+        this.company = company.toLowerCase();
+        this.role = role.toLowerCase();
         this.applied = applied;
-        this.status = status;
+        this.status = status.toLowerCase();
         this.deadline = deadline;
 
     }
@@ -54,6 +54,14 @@ public class Internship implements Serializable {
     public String toString() {
         return "Internship at " + company + " for the role " + role + " has applied: " + applied 
             + " current status is " + status + " deadline to apply is " + deadline; 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Internship i) {
+            return i.getCompany().equals(company) && i.getRole().equals(role);
+        } 
+        return false;
     }
 
 }

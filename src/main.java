@@ -1,9 +1,13 @@
 
+import java.time.LocalDate;
+ 
+
 
 
 void main() {
 
     int command = 0;
+    InternshipTracker internshipTracker = new InternshipTracker();
 
     while (command != 4) {
         try {
@@ -13,8 +17,78 @@ void main() {
                 String addOrRemove = IO.readln("So you want to add or remove(a/r):\n");
 
                 if (addOrRemove.equals("a")) {
-                    //will ask for details regarding the new intership to be added and create an
-                    //internship object and add it to the list.
+
+
+                    String company = IO.readln("Enter the company name:\n");
+
+                    if (company == null || company.equals("")) {
+                        while (company == null || company.equals("")) {
+                            company = IO.readln("Enter the company name(can't be null):\n");
+                        }
+                    }
+
+                    String role = IO.readln("Enter the role you are applying for:\n");
+                    if (role == null || role.equals("")) {
+                        while (role == null || role.equals("")) {
+                            role = IO.readln("Enter the role you are applying for(can't be null):\n");
+                        }
+                    }
+
+                    String applied = IO.readln("Have you applied to this internship(y/n):\n");
+                    if (applied == null || applied.equals("")) {
+                        while (applied == null|| applied.equals("")) {
+                            applied = IO.readln("Have you applied to this internship(can't be null):\n");
+                        }
+                    }
+
+
+                    if (!(applied.equals("y") || applied.equals("n"))) {
+                        while (!(applied.equals("y") || applied.equals("n"))) {
+                            applied = IO.readln("Have you applied to this internship enter y or n:\n");
+                        }
+                    }
+
+                    boolean appliedTF;
+
+                    if (applied.toLowerCase().equals("y")) {
+                        appliedTF = true;
+                    } else {
+                        appliedTF = false;
+                    }
+
+                    String status = IO.readln("if you have applied enter the current status(a for accepted, w for waiting, r for rejection):\n");
+                    if (status == null || status.equals("")) {
+                        while (status == null|| status.equals("")) {
+                            status = IO.readln("if you have applied enter the current status(a for accepted, w for waiting, r for rejection)(can't be null):\n");
+                        }
+                    }
+
+                    status = status.toLowerCase();
+                    if (!(status.equals("a") || status.equals("w") || status.equals("r")) ) {
+                        while (!(status.equals("y") || status.equals("n"))) {
+                            status = IO.readln("if you have applied enter the current status(a for accepted, w for waiting, r for rejection)(can't be null):\n");
+                        }
+                    }
+
+                    boolean notValid = true;
+                    LocalDate deadline  = null;
+
+                    while (notValid) {
+                        try {
+                            deadline = LocalDate.parse(IO.readln("Enter the deadline(yyyy-mm-dd):\n"));
+                            notValid = false;
+                        } catch (Exception e) {
+                            IO.println("Please follow the given format for deadline submission");
+                        }
+                    }
+                    Internship internship = new Internship(company, role, appliedTF, status, deadline);
+                    
+                    if (internshipTracker.add(internship)) {
+                        IO.println("Internship at " + company  + " for " + role + " added successfully.");
+                    } else {
+                        IO.println("Failed to add internship, likely a duplicate entry.");
+                    }
+
                 } else if (addOrRemove.equals("r")) {
                     //will ask for details regarding the intership to be removed and will remove it from the list.
                 } else {
