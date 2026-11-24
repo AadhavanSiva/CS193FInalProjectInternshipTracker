@@ -66,6 +66,19 @@ void remove(InternshipTracker internshipTracker) {
 
 }
 
+void export(InternshipTracker internshipTracker) {
+    String filename = repeatUntilValid("Enter the file name:\n");
+    while ((filename.startsWith(".") || !(filename.endsWith(".ser") || filename.endsWith(".dat")))) {
+        filename = repeatUntilValid("Enter the file name(must be a ser or dat file):\n");
+    }
+
+    if (internshipTracker.export(filename)) {
+        IO.println("Successfully stored internship data to " + filename);
+    } else {
+        IO.println("Unable to store internship data to " + filename);
+    }
+}
+
 String repeatUntilValid(String message) {
     String result = IO.readln(message);
     if (result == null || result.equals("")) {
@@ -103,10 +116,9 @@ void main() {
             } else if (command == 2) {
                 String importOrExport = IO.readln("So you want to import or export(i/e):\n");
 
-                if (importOrExport.equals("i")) {
-                    //will ask for file to import data to, then runs a method that loops through the given file
-                    // by reading each one as an object and adding it to internship tracker.
-                } else if (importOrExport.equals("e")) {
+                if (importOrExport.equals("e")) {
+                    export(internshipTracker);
+                } else if (importOrExport.equals("i")) {
                     // will ask for file, create the filename then write each internship from internship tracker
                     // as an object.
                 } else {

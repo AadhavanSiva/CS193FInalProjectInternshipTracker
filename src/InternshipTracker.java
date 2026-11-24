@@ -1,3 +1,5 @@
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class InternshipTracker {
@@ -27,5 +29,16 @@ public class InternshipTracker {
             }
         }
         return false;
+    }
+
+    public boolean export(String filename) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(filename))) {
+            for (Internship i : internships) {
+                oos.writeObject(i);
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
